@@ -1,9 +1,14 @@
 import React from 'react'
 import GoogleLogin from 'react-google-login'
+import axios from 'axios'
 
 const GoogleLoginButton = () => {
-  const onSuccess = googleUser => {
-    console.log(googleUser.getAuthResponse().id_token) //이걸로 받은 토큰 보내주기
+  const onSuccess = async googleUser => {
+    const result = await axios.post('http://localhost:3065/user/login', {
+      id_token: googleUser.getAuthResponse().id_token
+    }) //이걸로 받은 토큰 보내주기
+
+    console.log(result)
   }
 
   const onFailure = error => {
