@@ -1,31 +1,40 @@
 const express = require('express')
 const router = express.Router()
 
+const isUserEqual = require('../utils/isUserEqual')
+
 const {
   getAuth,
   GoogleAuthProvider,
   signInWithCredential,
+  onAuthStateChanged,
 } = require('firebase/auth')
 
-router.post('/login', async (req, res, next) => {
-  //로그인 (현재는 구글만)
-  const { id_token } = req.body
+router.post('/login', (req, res, next) => {
   const auth = getAuth()
+  const { googleUser } = req.body
 
   try {
-    //중복로그인 시도는 안하는지 체크
-    const credential = GoogleAuthProvider.credential(id_token)
-    await signInWithCredential(auth, credential)
-    res.status(200).send('ok')
+    const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
+      unsubscribe()
+      // Check if we are already signed-in Firebase with the correct user.
+      if (!isUserEqual(googleUser, firebaseUser)) {
+        const credential = GoogleAuthProvider.credential(googleUser.vc.id_token)
+        await signInWithCredential(auth, credential)
+        res.status(200).send('ok')
+      } else {
+        res.status(403).send('User already signed-in Firebase')
+      }
+    })
   } catch (e) {
+    //에러처리 추가
     console.error(e)
-    //오류 코드 보내주기
   }
 })
 
 router.post('/logout', async (req, res, next) => {
-  //로그아웃
-  // await getAuth.signOut()
+  // const auth = getAuth()
+  // await auth.signOut()
   res.status(200).send('ok')
 })
 
