@@ -7,6 +7,7 @@ import { Provider } from 'react-redux'
 import store from './store/configueStore'
 
 import 'reset-css'
+import './style/style.css'
 
 const rootEl = document.getElementById('root')
 
