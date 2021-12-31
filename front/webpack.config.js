@@ -60,6 +60,9 @@ module.exports = (env, option) => {
         }
       }),
       new webpack.HotModuleReplacementPlugin()
-    ]
+    ],
+    devServer: {
+      historyApiFallback: true
+    }
   }
 }
