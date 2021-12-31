@@ -65,6 +65,8 @@ module.exports = (env, option) => {
       new webpack.DefinePlugin({
         'process.env': JSON.stringify(process.env)
       })
-    ]
-  }
+    ],
+    devServer: {
+      historyApiFallback: true
+    }
 }
