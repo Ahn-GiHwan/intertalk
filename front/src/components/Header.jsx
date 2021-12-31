@@ -19,6 +19,7 @@ const Header = () => {
 
   switch (type) {
     case '/':
+    case '/question':
       return (
         <HeaderDiv>
           <MenuOutlined />
@@ -27,7 +28,7 @@ const Header = () => {
       )
     case '/profile':
       return (
-        <HeaderDiv>
+        <HeaderDiv borderBottom>
           <LeftOutlined onClick={goBack} />
           <UserInfo>Profile</UserInfo>
           <EmptyDiv>
@@ -37,7 +38,7 @@ const Header = () => {
       )
     default:
       return (
-        <HeaderDiv>
+        <HeaderDiv borderBottom>
           <LeftOutlined onClick={goBack} />
           <HeaderName>{type.replace('/', '').toUpperCase()}</HeaderName>
           <DashOutlined />
