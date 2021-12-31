@@ -3,6 +3,8 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin')
 const webpack = require('webpack')
+const dotenv = require('dotenv')
+dotenv.config()
 
 module.exports = (env, option) => {
   return {
@@ -59,10 +61,12 @@ module.exports = (env, option) => {
           useURLPolyfill: true
         }
       }),
-      new webpack.HotModuleReplacementPlugin()
+      new webpack.HotModuleReplacementPlugin(),
+      new webpack.DefinePlugin({
+        'process.env': JSON.stringify(process.env)
+      })
     ],
     devServer: {
       historyApiFallback: true
     }
-  }
 }
