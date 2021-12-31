@@ -11,7 +11,7 @@ export const HeaderDiv = styled.header`
   align-items: center;
   width: 100%;
   height: 50px;
-  border-bottom: 1px solid #d3d3d3;
+  border-bottom: ${props => props.borderBottom && '1px solid #d3d3d3'};
 `
 export const UserInfo = styled.span`
   width: fit-content;
